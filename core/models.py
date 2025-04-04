@@ -10,6 +10,11 @@ class Event(models.Model):
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    artist = models.ForeignKey('Artist', on_delete=models.CASCADE, related_name='events')
+    name = models.CharField(max_length=200)
+    venue = models.CharField(max_length=200)
+    ticket_link = models.URLField(blank=True)
+    image = models.ImageField(upload_to='events/', blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -17,7 +22,7 @@ class Event(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
+        return f"{self.artist.name} - {self.name}"
 
     class Meta:
         ordering = ['-date']
@@ -25,7 +30,7 @@ class Event(models.Model):
 class Artist(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
-    bio = models.TextField(blank=True)
+    bio = models.TextField()
     image = models.ImageField(upload_to='artists/')
     social_media = models.JSONField(default=dict, blank=True)
     featured = models.BooleanField(default=False)
@@ -39,6 +44,9 @@ class Artist(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['name']
 
 class Stage(models.Model):
     name = models.CharField(max_length=200)

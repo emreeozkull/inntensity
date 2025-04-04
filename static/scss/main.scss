@@ -288,6 +288,18 @@ main {
         position: relative;
         overflow: hidden;
         border-radius: 10px;
+        text-decoration: none;
+        color: $text-color;
+        display: block;
+        transition: all 0.3s ease;
+        
+        &:hover {
+            transform: translateY(-5px);
+            
+            .artist-image {
+                transform: scale(1.05);
+            }
+        }
         
         .artist-image {
             height: 300px;
@@ -304,11 +316,12 @@ main {
             padding: 20px;
             background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
             font-size: 20px;
+            margin: 0;
         }
         
-        &:hover {
+        @media (max-width: 768px) {
             .artist-image {
-                transform: scale(1.05);
+                height: 250px;
             }
         }
     }
@@ -750,6 +763,198 @@ footer {
         .footer-content {
             grid-template-columns: 1fr;
             gap: 20px;
+        }
+    }
+}
+
+// Artist detail page styles
+.artist-detail {
+    padding: 120px 0 60px;
+    
+    .artist-header {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        
+        .artist-image {
+            img {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+            }
+        }
+        
+        .artist-info {
+            h1 {
+                font-size: 48px;
+                margin-bottom: 20px;
+                color: $primary-color;
+            }
+            
+            .social-links {
+                display: flex;
+                gap: 20px;
+                
+                a {
+                    color: $text-color;
+                    text-decoration: none;
+                    font-weight: 500;
+                    @include hover-effect;
+                }
+            }
+        }
+    }
+    
+    .artist-bio {
+        margin-bottom: 60px;
+        
+        h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: $primary-color;
+        }
+        
+        .bio-content {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba($text-color, 0.9);
+        }
+    }
+    
+    .artist-events {
+        h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: $primary-color;
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .event-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            
+            &:hover {
+                transform: translateY(-5px);
+            }
+            
+            .event-image {
+                height: 200px;
+                overflow: hidden;
+                
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            
+            .event-info {
+                padding: 20px;
+                
+                h3 {
+                    font-size: 24px;
+                    margin-bottom: 10px;
+                    color: $primary-color;
+                }
+                
+                .event-date {
+                    font-size: 16px;
+                    color: rgba($text-color, 0.8);
+                    margin-bottom: 5px;
+                }
+                
+                .event-venue {
+                    font-size: 18px;
+                    margin-bottom: 10px;
+                }
+                
+                .event-description {
+                    font-size: 16px;
+                    line-height: 1.6;
+                    margin-bottom: 20px;
+                    color: rgba($text-color, 0.9);
+                }
+                
+                .ticket-button {
+                    display: inline-block;
+                    background-color: $primary-color;
+                    color: $text-color;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    text-decoration: none;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+                    
+                    &:hover {
+                        background-color: darken($primary-color, 10%);
+                    }
+                }
+            }
+        }
+        
+        .no-events {
+            text-align: center;
+            font-size: 18px;
+            color: rgba($text-color, 0.8);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        padding: 100px 0 40px;
+        
+        .artist-header {
+            grid-template-columns: 1fr;
+            gap: 20px;
+            
+            .artist-image {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            
+            .artist-info {
+                text-align: center;
+                
+                h1 {
+                    font-size: 36px;
+                }
+                
+                .social-links {
+                    justify-content: center;
+                }
+            }
+        }
+        
+        .artist-bio {
+            margin-bottom: 40px;
+            
+            h2 {
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            
+            .bio-content {
+                font-size: 16px;
+            }
+        }
+        
+        .artist-events {
+            h2 {
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
         }
     }
 } 

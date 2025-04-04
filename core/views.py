@@ -45,3 +45,13 @@ def info(request):
         'info_sections': info_sections,
         'faqs': faqs,
     })
+
+def artist_detail(request, slug):
+    artist = get_object_or_404(Artist, slug=slug)
+    events = artist.events.all()
+    
+    context = {
+        'artist': artist,
+        'events': events,
+    }
+    return render(request, 'core/artist_detail.html', context)
