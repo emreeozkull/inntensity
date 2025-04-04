@@ -1,0 +1,7 @@
+Django==5.2
+django-tailwind==4.0.1
+django-compressor==4.5.1
+django-sass-processor==1.4.1
+django-libsass==0.9
+Pillow==11.1.0
+sass==0.71.0 

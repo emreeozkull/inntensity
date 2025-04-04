@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Tickets - INNTENSITY{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Tickets</h1>
+        <p class="subtitle">Secure your spot at INNTENSITY 2024</p>
+    </div>
+</section>
+
+<section class="tickets-section">
+    <div class="container">
+        <div class="ticket-types">
+            {% for ticket in ticket_types %}
+            <div class="ticket-card {% if ticket.featured %}featured{% endif %}">
+                <div class="ticket-header">
+                    <h2>{{ ticket.name }}</h2>
+                    <div class="ticket-price">€{{ ticket.price }}</div>
+                </div>
+                <div class="ticket-features">
+                    <ul>
+                        {% for feature in ticket.features %}
+                        <li>{{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <a href="#" class="ticket-button">Buy Now</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="ticket-info">
+            <h2>Important Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Age Restriction</h3>
+                    <p>You must be 18 or older to attend INNTENSITY.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Refund Policy</h3>
+                    <p>Tickets are non-refundable but can be transferred to another person.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Payment Methods</h3>
+                    <p>We accept all major credit cards and PayPal.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

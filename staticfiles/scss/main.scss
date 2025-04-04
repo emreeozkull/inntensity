@@ -1,0 +1,625 @@
+// Variables
+$primary-color: #FF6B00;
+$secondary-color: #1A1A1A;
+$text-color: #FFFFFF;
+$background-color: #000000;
+
+// Mixins
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin hover-effect {
+    transition: all 0.3s ease;
+    &:hover {
+        color: $primary-color;
+    }
+}
+
+// Reset and base styles
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Alte Haas Grotesk', sans-serif;
+    background-color: $background-color;
+    color: $text-color;
+    line-height: 1.6;
+}
+
+// Header styles
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+
+    &.scroll-down {
+        transform: translateY(-100%);
+    }
+
+    &.scroll-up {
+        transform: translateY(0);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        display: block;
+        text-decoration: none;
+        
+        .logo-image {
+            height: 40px;
+            width: auto;
+        }
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+
+        a {
+            color: $text-color;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+// Main content
+main {
+    margin-top: 80px;
+    min-height: calc(100vh - 160px);
+}
+
+// Page header
+.page-header {
+    background-color: $secondary-color;
+    padding: 4rem 2rem;
+    text-align: center;
+
+    h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+        color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+// Hero section
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('../images/hero-bg.jpg') center/cover no-repeat;
+    @include flex-center;
+    text-align: center;
+}
+
+.hero-content {
+    h1 {
+        font-size: 5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+    }
+
+    .hero-date {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: $primary-color;
+    color: $text-color;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+        transform: translateY(-2px);
+    }
+}
+
+// Event info section
+.event-info {
+    padding: 5rem 2rem;
+    background-color: $secondary-color;
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 3rem;
+    }
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.info-card {
+    text-align: center;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+
+    h3 {
+        font-size: 2rem;
+        color: $primary-color;
+        margin-bottom: 1rem;
+    }
+}
+
+// Featured artists section
+.featured-artists {
+    padding: 5rem 2rem;
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 3rem;
+    }
+}
+
+.artist-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.artist-card {
+    text-align: center;
+
+    .artist-image {
+        width: 100%;
+        height: 300px;
+        background-color: $secondary-color;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+}
+
+.view-more {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    background-color: transparent;
+    border: 2px solid $primary-color;
+    color: $text-color;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: $primary-color;
+    }
+}
+
+// Lineup page styles
+.lineup-section {
+    padding: 4rem 2rem;
+    background-color: $background-color;
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+.day-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+    gap: 1rem;
+}
+
+.day-tab {
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    border: 2px solid $primary-color;
+    color: $text-color;
+    font-family: 'Alte Haas Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover, &.active {
+        background-color: $primary-color;
+    }
+}
+
+.day-content {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+}
+
+.stage {
+    margin-bottom: 3rem;
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: $primary-color;
+    }
+}
+
+.artist-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.artist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+
+    .artist-time {
+        font-weight: 700;
+        color: $primary-color;
+    }
+
+    .artist-name {
+        font-size: 1.2rem;
+    }
+}
+
+// Tickets page styles
+.tickets-section {
+    padding: 4rem 2rem;
+    background-color: $background-color;
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+.ticket-types {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.ticket-card {
+    background-color: $secondary-color;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-10px);
+    }
+
+    &.featured {
+        border: 2px solid $primary-color;
+        transform: scale(1.05);
+
+        &:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+    }
+}
+
+.ticket-header {
+    margin-bottom: 2rem;
+
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .ticket-price {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: $primary-color;
+    }
+}
+
+.ticket-features {
+    margin-bottom: 2rem;
+
+    ul {
+        list-style: none;
+        text-align: left;
+
+        li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+
+            &:before {
+                content: "✓";
+                position: absolute;
+                left: 0;
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+.ticket-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: $primary-color;
+    color: $text-color;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+    }
+}
+
+.ticket-info {
+    h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+    }
+}
+
+// Info page styles
+.info-section {
+    padding: 4rem 2rem;
+    background-color: $background-color;
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+.info-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+    gap: 1rem;
+}
+
+.info-tab {
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    border: 2px solid $primary-color;
+    color: $text-color;
+    font-family: 'Alte Haas Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover, &.active {
+        background-color: $primary-color;
+    }
+}
+
+.tab-content {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+}
+
+.location-details {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.map-container {
+    height: 400px;
+    background-color: $secondary-color;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.map-placeholder {
+    height: 100%;
+    @include flex-center;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.location-info {
+    h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: $primary-color;
+    }
+
+    p {
+        margin-bottom: 0.5rem;
+    }
+}
+
+.transport-options, .accommodation-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.transport-option, .accommodation-option {
+    background-color: $secondary-color;
+    padding: 2rem;
+    border-radius: 8px;
+
+    h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: $primary-color;
+    }
+
+    ul {
+        list-style: none;
+        margin-top: 1rem;
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+.faq-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.faq-item {
+    background-color: $secondary-color;
+    padding: 1.5rem;
+    border-radius: 8px;
+
+    h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: $primary-color;
+    }
+}
+
+// Footer styles
+.main-footer {
+    background-color: $secondary-color;
+    padding: 2rem;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+
+    a {
+        color: $text-color;
+        text-decoration: none;
+        @include hover-effect;
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .main-nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .hero-content {
+        h1 {
+            font-size: 3rem;
+        }
+
+        .hero-date {
+            font-size: 1.5rem;
+        }
+    }
+
+    .info-grid,
+    .artist-grid,
+    .ticket-types {
+        grid-template-columns: 1fr;
+    }
+
+    .location-details,
+    .transport-options,
+    .accommodation-options {
+        grid-template-columns: 1fr;
+    }
+
+    .day-tabs,
+    .info-tabs {
+        flex-wrap: wrap;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+} 

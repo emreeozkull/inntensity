@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}INNTENSITY - Techno Festival{% endblock %}
+
+{% block content %}
+<section class="hero" style="background-image: url('{{ featured_event.hero_image.url }}');">
+    <div class="hero-content">
+        <h1>INNTENSITY</h1>
+        <p class="hero-date">{{ featured_event.date|date:"F j, Y" }}</p>
+        <a href="{% url 'core:tickets' %}" class="cta-button">Get Tickets</a>
+    </div>
+</section>
+
+<section class="event-info">
+    <div class="container">
+        <h2>About the Event</h2>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Location</h3>
+                <p>Amsterdam, Netherlands</p>
+            </div>
+            <div class="info-card">
+                <h3>Duration</h3>
+                <p>3 Days of Music</p>
+            </div>
+            <div class="info-card">
+                <h3>Artists</h3>
+                <p>30+ International DJs</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="featured-artists">
+    <div class="container">
+        <h2>Featured Artists</h2>
+        <div class="artist-grid">
+            {% for artist in featured_artists %}
+            <div class="artist-card">
+                <div class="artist-image" style="background-image: url('{{ artist.image.url }}');"></div>
+                <h3>{{ artist.name }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'core:lineup' %}" class="view-more">View Full Lineup</a>
+    </div>
+</section>
+{% endblock %} 

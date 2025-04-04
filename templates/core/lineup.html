@@ -1,0 +1,78 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Lineup - INNTENSITY{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Lineup</h1>
+        <p class="subtitle">Featuring the world's best techno artists</p>
+    </div>
+</section>
+
+<section class="lineup-section">
+    <div class="container">
+        <div class="day-tabs">
+            <button class="day-tab active" data-day="friday">Friday</button>
+            <button class="day-tab" data-day="saturday">Saturday</button>
+            <button class="day-tab" data-day="sunday">Sunday</button>
+        </div>
+
+        <div class="lineup-content">
+            <div class="day-content active" id="friday">
+                {% for stage in stages %}
+                <div class="stage">
+                    <h2>{{ stage.name }}</h2>
+                    <div class="artist-list">
+                        {% for performance in friday_performances %}
+                            {% if performance.stage == stage %}
+                            <div class="artist-item">
+                                <div class="artist-time">{{ performance.start_time|time:"H:i" }} - {{ performance.end_time|time:"H:i" }}</div>
+                                <div class="artist-name">{{ performance.artist.name }}</div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="day-content" id="saturday">
+                {% for stage in stages %}
+                <div class="stage">
+                    <h2>{{ stage.name }}</h2>
+                    <div class="artist-list">
+                        {% for performance in saturday_performances %}
+                            {% if performance.stage == stage %}
+                            <div class="artist-item">
+                                <div class="artist-time">{{ performance.start_time|time:"H:i" }} - {{ performance.end_time|time:"H:i" }}</div>
+                                <div class="artist-name">{{ performance.artist.name }}</div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="day-content" id="sunday">
+                {% for stage in stages %}
+                <div class="stage">
+                    <h2>{{ stage.name }}</h2>
+                    <div class="artist-list">
+                        {% for performance in sunday_performances %}
+                            {% if performance.stage == stage %}
+                            <div class="artist-item">
+                                <div class="artist-time">{{ performance.start_time|time:"H:i" }} - {{ performance.end_time|time:"H:i" }}</div>
+                                <div class="artist-name">{{ performance.artist.name }}</div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

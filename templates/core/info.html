@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Info - INNTENSITY{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Info</h1>
+        <p class="subtitle">Everything you need to know about INNTENSITY</p>
+    </div>
+</section>
+
+<section class="info-section">
+    <div class="container">
+        <div class="info-tabs">
+            {% for section in info_sections %}
+            <button class="info-tab {% if forloop.first %}active{% endif %}" data-tab="{{ section.slug }}">{{ section.title }}</button>
+            {% endfor %}
+        </div>
+
+        <div class="info-content">
+            {% for section in info_sections %}
+            <div class="tab-content {% if forloop.first %}active{% endif %}" id="{{ section.slug }}">
+                <h2>{{ section.title }}</h2>
+                <div class="content-body">
+                    {{ section.content|safe }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                {% for faq in faqs %}
+                <div class="faq-item">
+                    <h3>{{ faq.question }}</h3>
+                    <p>{{ faq.answer }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 
