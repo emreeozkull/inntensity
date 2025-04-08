@@ -1,78 +1,59 @@
 {% extends 'core/base.html' %}
+{% load static %}
+{% load compress %}
 
 {% block title %}Lineup - INNTENSITY{% endblock %}
 
 {% block content %}
-<section class="page-header">
-    <div class="container">
+<div class="lineup-container">
+    <div class="page-header">
         <h1>Lineup</h1>
-        <p class="subtitle">Featuring the world's best techno artists</p>
+        <p class="subtitle">Experience the best electronic music artists</p>
     </div>
-</section>
 
-<section class="lineup-section">
-    <div class="container">
-        <div class="day-tabs">
-            <button class="day-tab active" data-day="friday">Friday</button>
-            <button class="day-tab" data-day="saturday">Saturday</button>
-            <button class="day-tab" data-day="sunday">Sunday</button>
-        </div>
-
-        <div class="lineup-content">
-            <div class="day-content active" id="friday">
-                {% for stage in stages %}
-                <div class="stage">
-                    <h2>{{ stage.name }}</h2>
-                    <div class="artist-list">
-                        {% for performance in friday_performances %}
-                            {% if performance.stage == stage %}
-                            <div class="artist-item">
-                                <div class="artist-time">{{ performance.start_time|time:"H:i" }} - {{ performance.end_time|time:"H:i" }}</div>
-                                <div class="artist-name">{{ performance.artist.name }}</div>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
+    <div class="lineup-section">
+        {% if events %}
+            <div class="day-tabs">
+                {% for event in events %}
+                    <div class="day-tab {% if forloop.first %}active{% endif %}" data-day="{{ event.id }}">
+                        {{ event.date|date:"F d, Y" }}
                     </div>
-                </div>
                 {% endfor %}
             </div>
 
-            <div class="day-content" id="saturday">
-                {% for stage in stages %}
-                <div class="stage">
-                    <h2>{{ stage.name }}</h2>
-                    <div class="artist-list">
-                        {% for performance in saturday_performances %}
-                            {% if performance.stage == stage %}
-                            <div class="artist-item">
-                                <div class="artist-time">{{ performance.start_time|time:"H:i" }} - {{ performance.end_time|time:"H:i" }}</div>
-                                <div class="artist-name">{{ performance.artist.name }}</div>
+            {% for event in events %}
+                <div class="day-content {% if forloop.first %}active{% endif %}" data-day="{{ event.id }}">
+                    {% for stage in stages %}
+                        <div class="stage">
+                            <h3>{{ stage.name }}</h3>
+                            <div class="artist-list">
+                                {% with has_performances=False %}
+                                    {% for performance in performances %}
+                                        {% if performance.event.id == event.id and performance.stage.id == stage.id %}
+                                            <div class="artist-item">
+                                                <div class="time">{{ performance.start_time|time:"H:i" }} - {{ performance.end_time|time:"H:i" }}</div>
+                                                <div class="artist-name">
+                                                    <a href="{% url 'core:artist_detail' performance.artist.slug %}">
+                                                        {{ performance.artist.name }}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            {% with has_performances=True %}{% endwith %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    
+                                {% endwith %}
                             </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                        </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
+            {% endfor %}
+        {% else %}
+            <div class="no-events">
+                <p>No upcoming events scheduled. Check back soon for updates!</p>
+                <a href="{% url 'core:home' %}" class="back-button">Return to Home</a>
             </div>
-
-            <div class="day-content" id="sunday">
-                {% for stage in stages %}
-                <div class="stage">
-                    <h2>{{ stage.name }}</h2>
-                    <div class="artist-list">
-                        {% for performance in sunday_performances %}
-                            {% if performance.stage == stage %}
-                            <div class="artist-item">
-                                <div class="artist-time">{{ performance.start_time|time:"H:i" }} - {{ performance.end_time|time:"H:i" }}</div>
-                                <div class="artist-name">{{ performance.artist.name }}</div>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+        {% endif %}
     </div>
-</section>
+</div>
 {% endblock %} 
