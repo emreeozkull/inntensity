@@ -43,7 +43,10 @@
             </a>
             {% endfor %}
         </div>
-        <a href="{% url 'core:lineup' %}" class="view-more">View Full Lineup</a>
+        <div class="view-more-container">
+            <a href="{% url 'core:lineup' %}" class="view-more">View Full Lineup</a>
+            <a href="{% url 'core:all_events' %}" class="view-more events-link">View All Events</a>
+        </div>
     </div>
 </section>
 {% endblock %} 

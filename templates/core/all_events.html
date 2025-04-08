@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}All Events - INNTENSITY{% endblock %}
+
+{% block content %}
+<div class="all-events">
+    <div class="container">
+        <div class="page-header">
+            <h1>All Events</h1>
+            <p class="subtitle">Discover all upcoming events featuring INNTENSITY artists</p>
+        </div>
+
+        {% if events %}
+        <div class="events-grid">
+            {% for event in events %}
+            <div class="event-card">
+                {% if event.image %}
+                <div class="event-image">
+                    <img src="{{ event.image.url }}" alt="{{ event.name }}">
+                </div>
+                {% endif %}
+                <div class="event-info">
+                    <h3>{{ event.name }}</h3>
+                    <p class="event-date">{{ event.date|date:"F j, Y" }}</p>
+                    <p class="event-venue">{{ event.venue }}</p>
+                    <p class="event-artist">by <a href="{% url 'core:artist_detail' event.artist.slug %}">{{ event.artist.name }}</a></p>
+                    {% if event.description %}
+                    <p class="event-description">{{ event.description|truncatewords:30 }}</p>
+                    {% endif %}
+                    {% if event.ticket_link %}
+                    <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener">Get Tickets</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-events">
+            <p>No upcoming events scheduled at the moment.</p>
+            <a href="{% url 'core:home' %}" class="back-button">Back to Home</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

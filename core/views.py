@@ -5,7 +5,7 @@ from .models import Event, Artist, Stage, Performance, TicketType, InfoSection, 
 
 def home(request):
     featured_event = Event.objects.filter(featured=True).first()
-    featured_artists = Artist.objects.filter(featured=True)[:3]
+    featured_artists = Artist.objects.filter(featured=True)[:6]
     return render(request, 'core/home.html', {
         'featured_event': featured_event,
         'featured_artists': featured_artists,
@@ -55,3 +55,11 @@ def artist_detail(request, slug):
         'events': events,
     }
     return render(request, 'core/artist_detail.html', context)
+
+def all_events(request):
+    events = Event.objects.all().order_by('date')
+    
+    context = {
+        'events': events,
+    }
+    return render(request, 'core/all_events.html', context)
