@@ -25,7 +25,7 @@
                 <p>3 Days of Music</p>
             </div>
             <div class="info-card">
-                <h3>Artists</h3>
+                <h3>Performers</h3>
                 <p>30+ International DJs</p>
             </div>
         </div>
@@ -34,10 +34,10 @@
 
 <section class="featured-artists">
     <div class="container">
-        <h2>Featured Artists</h2>
+        <h2>Featured Performers</h2>
         <div class="artist-grid">
             {% for artist in featured_artists %}
-            <a href="{% url 'core:artist_detail' artist.slug %}" class="artist-card">
+            <a href="{% url 'core:performer_detail' artist.slug %}" class="artist-card">
                 <div class="artist-image" style="background-image: url('{{ artist.image.url }}');"></div>
                 <h3>{{ artist.name }}</h3>
             </a>

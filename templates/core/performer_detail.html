@@ -1,0 +1,78 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ performer.name }} - INNTENSITY{% endblock %}
+
+{% block content %}
+<div class="performer-detail">
+    <div class="container">
+        <div class="performer-header">
+            <div class="performer-image">
+                <img src="{{ performer.image.url }}" alt="{{ performer.name }}">
+            </div>
+            <div class="performer-info">
+                <h1>{{ performer.name }}</h1>
+                <div class="social-links">
+                    {% if performer.social_media.facebook %}
+                    <a href="{{ performer.social_media.facebook }}" target="_blank" rel="noopener" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    {% endif %}
+                    {% if performer.social_media.instagram %}
+                    <a href="{{ performer.social_media.instagram }}" target="_blank" rel="noopener" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    {% endif %}
+                    {% if performer.social_media.twitter %}
+                    <a href="{{ performer.social_media.twitter }}" target="_blank" rel="noopener" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    {% endif %}
+                    {% if performer.social_media.soundcloud %}
+                    <a href="{{ performer.social_media.soundcloud }}" target="_blank" rel="noopener" class="social-link">
+                        <i class="fab fa-soundcloud"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="performer-bio">
+            <h2>Biography</h2>
+            <div class="bio-content">
+                {{ performer.bio|linebreaks }}
+            </div>
+        </div>
+
+        <div class="performer-events">
+            <h2>Upcoming Events</h2>
+            {% if events %}
+            <div class="events-grid">
+                {% for event in events %}
+                <div class="event-card">
+                    {% if event.hero_image %}
+                    <div class="event-image">
+                        <img src="{{ event.hero_image.url }}" alt="{{ event.title }}">
+                    </div>
+                    {% endif %}
+                    <div class="event-info">
+                        <h3>{{ event.title }}</h3>
+                        <p class="event-date">{{ event.date|date:"F j, Y" }}</p>
+                        <p class="event-venue">{{ event.venue }}</p>
+                        {% if event.description %}
+                        <p class="event-description">{{ event.description|truncatewords:30 }}</p>
+                        {% endif %}
+                        {% if event.ticket_link %}
+                        <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener">Get Tickets</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="no-events">No upcoming events scheduled.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

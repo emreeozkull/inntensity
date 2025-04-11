@@ -8,29 +8,47 @@
     <div class="container">
         <div class="page-header">
             <h1>All Events</h1>
-            <p class="subtitle">Discover all upcoming events featuring INNTENSITY artists</p>
+            <p class="subtitle">Explore all our upcoming events</p>
         </div>
-
         {% if events %}
         <div class="events-grid">
             {% for event in events %}
             <div class="event-card">
-                {% if event.image %}
+                {% if event.hero_image %}
                 <div class="event-image">
-                    <img src="{{ event.image.url }}" alt="{{ event.name }}">
+                    <a href="{% url 'core:event_detail' event.slug %}">
+                        <img src="{{ event.hero_image.url }}" alt="{{ event.title }}">
+                    </a>
                 </div>
                 {% endif %}
                 <div class="event-info">
-                    <h3>{{ event.name }}</h3>
+                    <h3><a href="{% url 'core:event_detail' event.slug %}">{{ event.title }}</a></h3>
                     <p class="event-date">{{ event.date|date:"F j, Y" }}</p>
                     <p class="event-venue">{{ event.venue }}</p>
-                    <p class="event-artist">by <a href="{% url 'core:artist_detail' event.artist.slug %}">{{ event.artist.name }}</a></p>
+                    
+                    {% if event.performers.all %}
+                    <div class="event-performers">
+                        <h4>Featured Performers:</h4>
+                        <div class="performers-list">
+                            {% for performer in event.performers.all %}
+                            <a href="{% url 'core:performer_detail' performer.slug %}" class="performer-tag">
+                                {{ performer.name }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
                     {% if event.description %}
                     <p class="event-description">{{ event.description|truncatewords:30 }}</p>
                     {% endif %}
-                    {% if event.ticket_link %}
-                    <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener">Get Tickets</a>
-                    {% endif %}
+                    
+                    <div class="event-actions">
+                        <a href="{% url 'core:event_detail' event.slug %}" class="details-button">View Details</a>
+                        {% if event.ticket_link %}
+                        <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener">Get Tickets</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             {% endfor %}

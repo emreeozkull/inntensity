@@ -438,12 +438,12 @@ main {
         }
     }
     
-    .artist-list {
+    .performer-list {
         display: grid;
         gap: 15px;
     }
     
-    .artist-item {
+    .performer-item {
         display: grid;
         grid-template-columns: 150px 1fr;
         align-items: center;
@@ -462,10 +462,10 @@ main {
             font-weight: 500;
         }
         
-        .artist-name {
+        .performer-name {
             font-size: 18px;
             
-            a {
+            .performer-link {
                 color: $text-color;
                 text-decoration: none;
                 font-weight: 600;
@@ -495,6 +495,32 @@ main {
         }
     }
     
+    .no-events {
+        text-align: center;
+        padding: 40px;
+        
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: rgba($text-color, 0.8);
+        }
+        
+        .back-button {
+            display: inline-block;
+            background-color: $primary-color;
+            color: $text-color;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            
+            &:hover {
+                background-color: darken($primary-color, 10%);
+            }
+        }
+    }
+    
     @media (max-width: 768px) {
         padding: 20px;
         
@@ -509,7 +535,7 @@ main {
             text-align: center;
         }
         
-        .artist-item {
+        .performer-item {
             grid-template-columns: 1fr;
             gap: 5px;
             
@@ -517,7 +543,7 @@ main {
                 font-size: 14px;
             }
             
-            .artist-name {
+            .performer-name {
                 font-size: 16px;
             }
         }
@@ -1018,7 +1044,9 @@ footer {
 
 // All events page styles
 .all-events {
-    padding: 120px 0 60px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
     
     .events-grid {
         display: grid;
@@ -1031,7 +1059,7 @@ footer {
         background-color: rgba(255, 255, 255, 0.05);
         border-radius: 10px;
         overflow: hidden;
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease;
         
         &:hover {
             transform: translateY(-5px);
@@ -1045,6 +1073,11 @@ footer {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+            
+            &:hover img {
+                transform: scale(1.05);
             }
         }
         
@@ -1052,56 +1085,100 @@ footer {
             padding: 20px;
             
             h3 {
-                font-size: 24px;
+                font-size: 20px;
                 margin-bottom: 10px;
-                color: $primary-color;
-            }
-            
-            .event-date {
-                font-size: 16px;
-                color: rgba($text-color, 0.8);
-                margin-bottom: 5px;
-            }
-            
-            .event-venue {
-                font-size: 18px;
-                margin-bottom: 10px;
-            }
-            
-            .event-artist {
-                font-size: 16px;
-                margin-bottom: 15px;
                 
                 a {
                     color: $primary-color;
                     text-decoration: none;
-                    font-weight: 500;
+                    transition: color 0.3s ease;
                     
                     &:hover {
-                        text-decoration: underline;
+                        color: lighten($primary-color, 10%);
+                    }
+                }
+            }
+            
+            .event-date, .event-venue {
+                color: rgba($text-color, 0.8);
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+            
+            .event-performers {
+                margin: 15px 0;
+                
+                h4 {
+                    font-size: 15px;
+                    margin-bottom: 8px;
+                    color: rgba($text-color, 0.9);
+                    font-weight: 500;
+                }
+                
+                .performers-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
+                
+                .performer-tag {
+                    display: inline-block;
+                    padding: 5px 10px;
+                    background-color: rgba($primary-color, 0.15);
+                    border-radius: 20px;
+                    color: $primary-color;
+                    font-size: 13px;
+                    text-decoration: none;
+                    transition: all 0.3s ease;
+                    border: 1px solid rgba($primary-color, 0.3);
+                    
+                    &:hover {
+                        background-color: rgba($primary-color, 0.3);
+                        transform: translateY(-2px);
+                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                     }
                 }
             }
             
             .event-description {
-                font-size: 16px;
-                line-height: 1.6;
-                margin-bottom: 20px;
-                color: rgba($text-color, 0.9);
+                margin-top: 10px;
+                color: rgba($text-color, 0.7);
+                font-size: 14px;
+                line-height: 1.5;
             }
             
-            .ticket-button {
-                display: inline-block;
-                background-color: $primary-color;
-                color: $text-color;
-                padding: 10px 20px;
-                border-radius: 5px;
-                text-decoration: none;
-                font-weight: 500;
-                transition: all 0.3s ease;
+            .event-actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 20px;
+                flex-wrap: wrap;
                 
-                &:hover {
-                    background-color: darken($primary-color, 10%);
+                .details-button, .ticket-button {
+                    display: inline-block;
+                    padding: 8px 16px;
+                    border-radius: 5px;
+                    text-decoration: none;
+                    font-weight: 500;
+                    font-size: 14px;
+                    transition: all 0.3s ease;
+                }
+                
+                .details-button {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    color: $text-color;
+                    
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.2);
+                    }
+                }
+                
+                .ticket-button {
+                    background-color: $primary-color;
+                    color: $text-color;
+                    
+                    &:hover {
+                        background-color: darken($primary-color, 10%);
+                    }
                 }
             }
         }
@@ -1109,7 +1186,7 @@ footer {
     
     .no-events {
         text-align: center;
-        padding: 60px 0;
+        padding: 40px;
         
         p {
             font-size: 18px;
@@ -1134,11 +1211,433 @@ footer {
     }
     
     @media (max-width: 768px) {
-        padding: 100px 0 40px;
+        padding: 20px;
         
         .events-grid {
             grid-template-columns: 1fr;
+        }
+        
+        .event-card {
+            .event-performers {
+                .performers-list {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}
+
+.performer-detail {
+    padding: 2rem 0;
+
+    .performer-header {
+        display: flex;
+        gap: 3rem;
+        margin-bottom: 4rem;
+        align-items: center;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .performer-image {
+            flex: 0 0 300px;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+            img {
+                width: 100%;
+                height: auto;
+                display: block;
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+
+            @media (max-width: 768px) {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+
+        .performer-info {
+            flex: 1;
+
+            h1 {
+                font-size: 3rem;
+                margin-bottom: 1.5rem;
+                color: $primary-color;
+                font-weight: 700;
+
+                @media (max-width: 768px) {
+                    font-size: 2.5rem;
+                }
+            }
+
+            .social-links {
+                display: flex;
+                gap: 1.5rem;
+                margin-top: 2rem;
+
+                .social-link {
+                    color: $text-color;
+                    font-size: 1.5rem;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        color: $primary-color;
+                        transform: translateY(-3px);
+                    }
+                }
+            }
+        }
+    }
+
+    .performer-bio {
+        margin-bottom: 4rem;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: $primary-color;
+        }
+
+        .bio-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: $text-color;
+
+            p {
+                margin-bottom: 1rem;
+            }
+        }
+    }
+
+    .performer-events {
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: $primary-color;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .event-image {
+                position: relative;
+                padding-top: 56.25%; // 16:9 aspect ratio
+
+                img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.3s ease;
+
+                    &:hover {
+                        transform: scale(1.05);
+                    }
+                }
+            }
+
+            .event-info {
+                padding: 1.5rem;
+
+                h3 {
+                    font-size: 1.5rem;
+                    margin-bottom: 0.5rem;
+                    color: $primary-color;
+                }
+
+                .event-date {
+                    color: $secondary-color;
+                    font-weight: 500;
+                    margin-bottom: 0.5rem;
+                }
+
+                .event-venue {
+                    color: $text-color;
+                    margin-bottom: 1rem;
+                }
+
+                .event-description {
+                    color: $text-color;
+                    margin-bottom: 1.5rem;
+                    line-height: 1.6;
+                }
+
+                .ticket-button {
+                    display: inline-block;
+                    padding: 0.8rem 1.5rem;
+                    background: $primary-color;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 0.5rem;
+                    transition: all 0.3s ease;
+                    font-weight: 500;
+
+                    &:hover {
+                        background: darken($primary-color, 10%);
+                        transform: translateY(-2px);
+                    }
+                }
+            }
+        }
+
+        .no-events {
+            text-align: center;
+            padding: 2rem;
+            color: $text-color;
+            font-size: 1.2rem;
+        }
+    }
+}
+
+// Event detail page styles
+.event-detail {
+    padding: 40px 20px;
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .event-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+        
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+        
+        .event-hero-image {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        
+        .event-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+            h1 {
+                font-size: 32px;
+                margin-bottom: 15px;
+                color: $primary-color;
+            }
+            
+            .event-meta {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 20px;
+                
+                .event-date, .event-venue {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    color: rgba($text-color, 0.8);
+                    
+                    i {
+                        color: $primary-color;
+                    }
+                }
+            }
+            
+            .event-ticket {
+                margin-top: 20px;
+                
+                .ticket-button {
+                    display: inline-block;
+                    background-color: $primary-color;
+                    color: $text-color;
+                    padding: 12px 30px;
+                    border-radius: 5px;
+                    text-decoration: none;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+                    
+                    &:hover {
+                        background-color: darken($primary-color, 10%);
+                    }
+                }
+            }
+        }
+    }
+    
+    .event-description {
+        margin-bottom: 40px;
+        
+        h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: $primary-color;
+        }
+        
+        .description-content {
+            color: rgba($text-color, 0.8);
+            line-height: 1.6;
+        }
+    }
+    
+    .event-lineup {
+        margin-bottom: 60px;
+        
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: $primary-color;
+        }
+    }
+    
+    .featured-performers {
+        margin-bottom: 60px;
+        
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: $primary-color;
+        }
+        
+        .performers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
+            
+            .performer-card {
+                background-color: rgba(255, 255, 255, 0.05);
+                border-radius: 8px;
+                overflow: hidden;
+                transition: transform 0.3s ease;
+                
+                &:hover {
+                    transform: translateY(-5px);
+                    
+                    .performer-image img {
+                        transform: scale(1.05);
+                    }
+                }
+                
+                a {
+                    text-decoration: none;
+                    color: $text-color;
+                }
+                
+                .performer-image {
+                    height: 200px;
+                    overflow: hidden;
+                    
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        transition: transform 0.3s ease;
+                    }
+                }
+                
+                .performer-card-info {
+                    padding: 15px;
+                    
+                    h3 {
+                        font-size: 16px;
+                        margin: 0 0 5px;
+                    }
+                    
+                    p {
+                        font-size: 14px;
+                        color: rgba($text-color, 0.7);
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+    
+    .event-location {
+        margin-bottom: 40px;
+        
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: $primary-color;
+        }
+        
+        .location-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            
+            @media (max-width: 768px) {
+                grid-template-columns: 1fr;
+            }
+            
+            .location-map {
+                width: 100%;
+                height: 300px;
+                border-radius: 10px;
+                overflow: hidden;
+                
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            
+            .location-details {
+                h3 {
+                    font-size: 20px;
+                    margin-bottom: 10px;
+                }
+                
+                p {
+                    margin-bottom: 15px;
+                    color: rgba($text-color, 0.8);
+                }
+                
+                .location-description {
+                    line-height: 1.6;
+                    color: rgba($text-color, 0.8);
+                }
+            }
         }
     }
 } 

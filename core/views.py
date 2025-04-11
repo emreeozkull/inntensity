@@ -1,35 +1,42 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Event, Artist, Stage, Performance, TicketType, InfoSection, FAQ
-from django.db.models import Q
-from datetime import datetime
-from collections import defaultdict
+from .models import Event, Performer, Stage, Performance, TicketType, InfoSection, FAQ
+from datetime import datetime, timedelta
 
 # Create your views here.
 
 def home(request):
     featured_event = Event.objects.filter(featured=True).first()
-    featured_artists = Artist.objects.filter(featured=True)[:6]
+    featured_artists = Performer.objects.filter(featured=True)[:6]
     return render(request, 'core/home.html', {
         'featured_event': featured_event,
         'featured_artists': featured_artists,
     })
 
 def lineup(request):
-    # Get all events ordered by date
-    events = Event.objects.all().order_by('date')
-    
-    # Get all stages
+    event = Event.objects.filter(featured=True).first()
+    if not event:
+        print("No event found for lineup")
+        return render(request, 'core/lineup.html', {'error': 'No event found'})
+    print("Event found for lineup", event.title)
     stages = Stage.objects.all()
+    print("Stages found", stages)
+    performances = Performance.objects.filter(event=event).order_by('date', 'start_time')
+    print("Performances found for event", event.title, performances)
     
-    # Get all performances
-    performances = Performance.objects.all().order_by('start_time')
+    # Get unique dates from performances
+    unique_dates = Performance.objects.filter(event=event).values_list('date', flat=True).distinct().order_by('date')
     
-    context = {
-        'events': events,
+    # Organize performances by date
+    performances_by_date = {}
+    for date in unique_dates:
+        performances_by_date[date] = Performance.objects.filter(event=event, date=date)
+    
+    return render(request, 'core/lineup.html', {
+        'event': event,
         'stages': stages,
-        'performances': performances,
-    }
-    return render(request, 'core/lineup.html', context)
+        'unique_dates': unique_dates,
+        'performances_by_date': performances_by_date,
+    })
 
 def tickets(request):
     ticket_types = TicketType.objects.filter(available=True)
@@ -45,15 +52,37 @@ def info(request):
         'faqs': faqs,
     })
 
-def artist_detail(request, slug):
-    artist = get_object_or_404(Artist, slug=slug)
-    events = artist.events.all()
+def performer_detail(request, slug):
+    performer = get_object_or_404(Performer, slug=slug)
+    events = performer.events.all()
     
     context = {
-        'artist': artist,
+        'performer': performer,
         'events': events,
     }
-    return render(request, 'core/artist_detail.html', context)
+    return render(request, 'core/performer_detail.html', context)
+
+def event_detail(request, slug):
+    event = get_object_or_404(Event, slug=slug)
+    stages = Stage.objects.all()
+    performances = Performance.objects.filter(event=event).order_by('date', 'start_time')
+    
+    # Get unique dates from performances
+    unique_dates = Performance.objects.filter(event=event).values_list('date', flat=True).distinct().order_by('date')
+    
+    # Organize performances by date
+    performances_by_date = {}
+    for date in unique_dates:
+        performances_by_date[date] = Performance.objects.filter(event=event, date=date)
+    
+    context = {
+        'event': event,
+        'stages': stages,
+        'performances': performances,
+        'unique_dates': unique_dates,
+        'performances_by_date': performances_by_date,
+    }
+    return render(request, 'core/event_detail.html', context)
 
 def all_events(request):
     events = Event.objects.all().order_by('date')

@@ -10,8 +10,8 @@ class Event(models.Model):
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    artist = models.ForeignKey('Artist', on_delete=models.CASCADE, related_name='events')
-    name = models.CharField(max_length=200)
+    performers = models.ManyToManyField('Performer', related_name='events')
+    name = models.CharField(max_length=200) # TODO: Remove this or it is used for admin page of performers 
     venue = models.CharField(max_length=200)
     ticket_link = models.URLField(blank=True)
     image = models.ImageField(upload_to='events/', blank=True)
@@ -22,12 +22,12 @@ class Event(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.artist.name} - {self.name}"
+        return f"{self.performers.name} - {self.name}"
 
     class Meta:
         ordering = ['-date']
 
-class Artist(models.Model):
+class Performer(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
     bio = models.TextField()
@@ -60,19 +60,19 @@ class Stage(models.Model):
 
 class Performance(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='performances')
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name='performances')
+    performer = models.ForeignKey(Performer, on_delete=models.CASCADE, related_name='performances')
     stage = models.ForeignKey(Stage, on_delete=models.CASCADE, related_name='performances')
     start_time = models.TimeField()
     end_time = models.TimeField()
-    day = models.IntegerField(choices=[(1, 'Friday'), (2, 'Saturday'), (3, 'Sunday')])
+    date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['day', 'start_time']
+        ordering = ['date', 'start_time']
 
     def __str__(self):
-        return f"{self.artist.name} at {self.stage.name} on Day {self.day}"
+        return f"{self.performer.name} at {self.stage.name} on {self.date.strftime('%A, %b %d')}"
 
 class TicketType(models.Model):
     name = models.CharField(max_length=200)
@@ -115,6 +115,5 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
-
     class Meta:
         ordering = ['order']

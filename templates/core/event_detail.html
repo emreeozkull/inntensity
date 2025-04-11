@@ -1,0 +1,150 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load core_tags %}
+
+{% block title %}{{ event.title }} - INNTENSITY{% endblock %}
+
+{% block content %}
+<div class="event-detail">
+    <div class="container">
+        <div class="event-header">
+            {% if event.hero_image %}
+            <div class="event-hero-image">
+                <img src="{{ event.hero_image.url }}" alt="{{ event.title }}">
+            </div>
+            {% endif %}
+            
+            <div class="event-info">
+                <h1>{{ event.title }}</h1>
+                <div class="event-meta">
+                    <div class="event-date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>{{ event.date|date:"F j, Y" }}</span>
+                    </div>
+                    <div class="event-venue">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ event.venue }}</span>
+                    </div>
+                </div>
+                
+                {% if event.ticket_link %}
+                <div class="event-ticket">
+                    <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener">Get Tickets</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if event.description %}
+        <div class="event-description">
+            <h2>About This Event</h2>
+            <div class="description-content">
+                {{ event.description|linebreaks }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Lineup section that matches lineup.html -->
+        <div class="lineup-section">
+            <h2>Lineup</h2>
+            
+            <div class="day-tabs">
+                {% for date in unique_dates %}
+                <div class="day-tab {% if forloop.first %}active{% endif %}" data-day="{{ forloop.counter }}">
+                    {{ date|date:"D, M j" }}
+                </div>
+                {% endfor %}
+            </div>
+
+            {% for date in unique_dates %}
+            <div class="day-content {% if forloop.first %}active{% endif %}" data-day="{{ forloop.counter }}">
+                {% for stage in stages %}
+                    <div class="stage">
+                        <h3>{{ stage.name }}</h3>
+                        <div class="performer-list">
+                            {% for performance in performances_by_date|get_item:date %}
+                                {% if performance.stage.id == stage.id %}
+                                    <div class="performer-item">
+                                        <div class="time">{{ performance.start_time|time:"H:i" }} - {{ performance.end_time|time:"H:i" }}</div>
+                                        <div class="performer-name">
+                                            <a href="{% url 'core:performer_detail' performance.performer.slug %}" class="performer-link">
+                                                {{ performance.performer.name }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="featured-performers">
+            <h2>Featured Performers</h2>
+            <div class="performers-grid">
+                {% for performance in performances %}
+                    {% if performance.performer.featured %}
+                    <div class="performer-card">
+                        <a href="{% url 'core:performer_detail' performance.performer.slug %}">
+                            <div class="performer-image">
+                                <img src="{{ performance.performer.image.url }}" alt="{{ performance.performer.name }}">
+                            </div>
+                            <div class="performer-card-info">
+                                <h3>{{ performance.performer.name }}</h3>
+                                {% if performance.performer.genre %}
+                                <p>{{ performance.performer.genre }}</p>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if event.location %}
+        <div class="event-location">
+            <h2>Location</h2>
+            <div class="location-info">
+                <div class="location-map">
+                    <!-- This would be replaced with an actual map implementation -->
+                    <img src="{% static 'images/map-placeholder.jpg' %}" alt="Event location map">
+                </div>
+                <div class="location-details">
+                    <h3>{{ event.venue }}</h3>
+                    <p>{{ event.location }}</p>
+                    {% if event.location_description %}
+                    <div class="location-description">
+                        {{ event.location_description|linebreaks }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dayTabs = document.querySelectorAll('.day-tab');
+        const dayContents = document.querySelectorAll('.day-content');
+
+        dayTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const day = this.getAttribute('data-day');
+                
+                // Remove active class from all tabs and contents
+                dayTabs.forEach(t => t.classList.remove('active'));
+                dayContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                document.querySelector(`.day-content[data-day="${day}"]`).classList.add('active');
+            });
+        });
+    });
+</script>
+{% endblock %} 

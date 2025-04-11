@@ -1,6 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load compress %}
+{% load core_tags %}
 
 {% block title %}Lineup - INNTENSITY{% endblock %}
 
@@ -8,52 +9,69 @@
 <div class="lineup-container">
     <div class="page-header">
         <h1>Lineup</h1>
-        <p class="subtitle">Experience the best electronic music artists</p>
+        <p class="subtitle">Experience the best electronic music performers</p>
     </div>
 
     <div class="lineup-section">
-        {% if events %}
+        {% if event %}
             <div class="day-tabs">
-                {% for event in events %}
-                    <div class="day-tab {% if forloop.first %}active{% endif %}" data-day="{{ event.id }}">
-                        {{ event.date|date:"F d, Y" }}
-                    </div>
+                {% for date in unique_dates %}
+                <div class="day-tab {% if forloop.first %}active{% endif %}" data-day="{{ forloop.counter }}">
+                    {{ date|date:"D, M j" }}
+                </div>
                 {% endfor %}
             </div>
 
-            {% for event in events %}
-                <div class="day-content {% if forloop.first %}active{% endif %}" data-day="{{ event.id }}">
-                    {% for stage in stages %}
-                        <div class="stage">
-                            <h3>{{ stage.name }}</h3>
-                            <div class="artist-list">
-                                {% with has_performances=False %}
-                                    {% for performance in performances %}
-                                        {% if performance.event.id == event.id and performance.stage.id == stage.id %}
-                                            <div class="artist-item">
-                                                <div class="time">{{ performance.start_time|time:"H:i" }} - {{ performance.end_time|time:"H:i" }}</div>
-                                                <div class="artist-name">
-                                                    <a href="{% url 'core:artist_detail' performance.artist.slug %}">
-                                                        {{ performance.artist.name }}
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            {% with has_performances=True %}{% endwith %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    
-                                {% endwith %}
-                            </div>
+            {% for date in unique_dates %}
+            <div class="day-content {% if forloop.first %}active{% endif %}" data-day="{{ forloop.counter }}">
+                {% for stage in stages %}
+                    <div class="stage">
+                        <h3>{{ stage.name }}</h3>
+                        <div class="performer-list">
+                            {% for performance in performances_by_date|get_item:date %}
+                                {% if performance.stage.id == stage.id %}
+                                    <div class="performer-item">
+                                        <div class="time">{{ performance.start_time|time:"H:i" }} - {{ performance.end_time|time:"H:i" }}</div>
+                                        <div class="performer-name">
+                                            <a href="{% url 'core:performer_detail' performance.performer.slug %}" class="performer-link">
+                                                {{ performance.performer.name }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
+            </div>
             {% endfor %}
         {% else %}
             <div class="no-events">
-                <p>No upcoming events scheduled. Check back soon for updates!</p>
-                <a href="{% url 'core:home' %}" class="back-button">Return to Home</a>
+                <p>No upcoming events scheduled.</p>
+                <a href="{% url 'core:home' %}" class="back-button">Back to Home</a>
             </div>
         {% endif %}
     </div>
 </div>
-{% endblock %} 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dayTabs = document.querySelectorAll('.day-tab');
+        const dayContents = document.querySelectorAll('.day-content');
+
+        dayTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const day = this.getAttribute('data-day');
+                
+                // Remove active class from all tabs and contents
+                dayTabs.forEach(t => t.classList.remove('active'));
+                dayContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                document.querySelector(`.day-content[data-day="${day}"]`).classList.add('active');
+            });
+        });
+    });
+</script>
+{% endblock %}

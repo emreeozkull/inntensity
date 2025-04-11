@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, Artist, Stage, Performance, TicketType, InfoSection, FAQ
+from .models import Event, Performer, Stage, Performance, TicketType, InfoSection, FAQ
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
@@ -9,8 +9,8 @@ class EventAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'date'
 
-@admin.register(Artist)
-class ArtistAdmin(admin.ModelAdmin):
+@admin.register(Performer)
+class PerformerAdmin(admin.ModelAdmin):
     list_display = ('name', 'featured', 'created_at')
     list_filter = ('featured',)
     search_fields = ('name', 'bio')
@@ -23,10 +23,11 @@ class StageAdmin(admin.ModelAdmin):
 
 @admin.register(Performance)
 class PerformanceAdmin(admin.ModelAdmin):
-    list_display = ('artist', 'stage', 'event', 'day', 'start_time', 'end_time')
-    list_filter = ('day', 'event', 'stage')
-    search_fields = ('artist__name', 'stage__name')
-    autocomplete_fields = ['artist', 'stage', 'event']
+    list_display = ('performer', 'stage', 'event', 'date', 'start_time', 'end_time')
+    list_filter = ('date', 'event', 'stage')
+    search_fields = ('performer__name', 'stage__name')
+    autocomplete_fields = ['performer', 'stage', 'event']
+    date_hierarchy = 'date'
 
 @admin.register(TicketType)
 class TicketTypeAdmin(admin.ModelAdmin):
