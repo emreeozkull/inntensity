@@ -1,0 +1,1 @@
+# This file ensures proper initialization of static files 

@@ -102,7 +102,7 @@ body {
     a {
         color: $text-color;
         text-decoration: none;
-        font-weight: 500;
+        font-weight: 700;
         @include hover-effect;
     }
     
@@ -337,7 +337,7 @@ main {
         display: inline-block;
         color: $text-color;
         text-decoration: none;
-        font-weight: 500;
+        font-weight: 700;
         font-size: 18px;
         padding: 10px 20px;
         border-radius: 5px;
@@ -468,7 +468,7 @@ main {
             .performer-link {
                 color: $text-color;
                 text-decoration: none;
-                font-weight: 600;
+                font-weight: 700;
                 position: relative;
                 padding-bottom: 2px;
                 transition: all 0.3s ease;
@@ -512,7 +512,7 @@ main {
             padding: 12px 30px;
             border-radius: 5px;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 700;
             transition: all 0.3s ease;
             
             &:hover {
@@ -694,7 +694,7 @@ main {
         border: none;
         color: $text-color;
         font-size: 18px;
-        font-weight: 500;
+        font-weight: 700;
         padding: 10px 20px;
         cursor: pointer;
         position: relative;
@@ -882,7 +882,7 @@ footer {
                 a {
                     color: $text-color;
                     text-decoration: none;
-                    font-weight: 500;
+                    font-weight: 700;
                     @include hover-effect;
                 }
             }
@@ -973,7 +973,7 @@ footer {
                     padding: 10px 20px;
                     border-radius: 5px;
                     text-decoration: none;
-                    font-weight: 500;
+                    font-weight: 700;
                     transition: all 0.3s ease;
                     
                     &:hover {
@@ -1131,6 +1131,7 @@ footer {
                     text-decoration: none;
                     transition: all 0.3s ease;
                     border: 1px solid rgba($primary-color, 0.3);
+                    font-weight: 700;
                     
                     &:hover {
                         background-color: rgba($primary-color, 0.3);
@@ -1158,7 +1159,7 @@ footer {
                     padding: 8px 16px;
                     border-radius: 5px;
                     text-decoration: none;
-                    font-weight: 500;
+                    font-weight: 700;
                     font-size: 14px;
                     transition: all 0.3s ease;
                 }
@@ -1201,7 +1202,7 @@ footer {
             padding: 12px 30px;
             border-radius: 5px;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 700;
             transition: all 0.3s ease;
             
             &:hover {
@@ -1379,7 +1380,7 @@ footer {
 
                 .event-date {
                     color: $secondary-color;
-                    font-weight: 500;
+                    font-weight: 700;
                     margin-bottom: 0.5rem;
                 }
 
@@ -1402,7 +1403,7 @@ footer {
                     text-decoration: none;
                     border-radius: 0.5rem;
                     transition: all 0.3s ease;
-                    font-weight: 500;
+                    font-weight: 700;
 
                     &:hover {
                         background: darken($primary-color, 10%);
@@ -1492,7 +1493,7 @@ footer {
                     padding: 12px 30px;
                     border-radius: 5px;
                     text-decoration: none;
-                    font-weight: 500;
+                    font-weight: 700;
                     transition: all 0.3s ease;
                     
                     &:hover {
