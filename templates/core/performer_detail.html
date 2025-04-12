@@ -4,6 +4,29 @@
 {% block title %}{{ performer.name }} - INNTENSITY{% endblock %}
 
 {% block content %}
+<style>
+    /* Clickable card styles */
+    .event-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .event-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .event-card .ticket-button {
+        position: relative;
+        z-index: 2;
+    }
+</style>
+
 <div class="performer-detail">
     <div class="container">
         <div class="performer-header">
@@ -49,7 +72,7 @@
             {% if events %}
             <div class="events-grid">
                 {% for event in events %}
-                <div class="event-card">
+                <a href="{% url 'core:event_detail' event.slug %}" class="event-card">
                     {% if event.hero_image %}
                     <div class="event-image">
                         <img src="{{ event.hero_image.url }}" alt="{{ event.title }}">
@@ -63,10 +86,10 @@
                         <p class="event-description">{{ event.description|truncatewords:30 }}</p>
                         {% endif %}
                         {% if event.ticket_link %}
-                        <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener">Get Tickets</a>
+                        <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener" onclick="event.stopPropagation();">Get Tickets</a>
                         {% endif %}
                     </div>
-                </div>
+                </a>
                 {% endfor %}
             </div>
             {% else %}
