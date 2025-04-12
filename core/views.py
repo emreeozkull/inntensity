@@ -18,8 +18,6 @@ def lineup(request):
         print("No event found for lineup")
         return render(request, 'core/lineup.html', {'error': 'No event found'})
     print("Event found for lineup", event.title)
-    stages = Stage.objects.all()
-    print("Stages found", stages)
     performances = Performance.objects.filter(event=event).order_by('date', 'start_time')
     print("Performances found for event", event.title, performances)
     
@@ -28,14 +26,22 @@ def lineup(request):
     
     # Organize performances by date
     performances_by_date = {}
+    # Track stages that have performances for each date
+    stages_by_date = {}
+    
     for date in unique_dates:
-        performances_by_date[date] = Performance.objects.filter(event=event, date=date)
+        date_performances = Performance.objects.filter(event=event, date=date)
+        performances_by_date[date] = date_performances
+        
+        # Get only stages that have performances on this date
+        active_stage_ids = date_performances.values_list('stage', flat=True).distinct()
+        stages_by_date[date] = Stage.objects.filter(id__in=active_stage_ids)
     
     return render(request, 'core/lineup.html', {
         'event': event,
-        'stages': stages,
         'unique_dates': unique_dates,
         'performances_by_date': performances_by_date,
+        'stages_by_date': stages_by_date,
     })
 
 def tickets(request):
@@ -64,23 +70,32 @@ def performer_detail(request, slug):
 
 def event_detail(request, slug):
     event = get_object_or_404(Event, slug=slug)
-    stages = Stage.objects.all()
     performances = Performance.objects.filter(event=event).order_by('date', 'start_time')
+    performers = Performer.objects.filter(performances__event=event).distinct()
     
     # Get unique dates from performances
     unique_dates = Performance.objects.filter(event=event).values_list('date', flat=True).distinct().order_by('date')
     
     # Organize performances by date
     performances_by_date = {}
+    # Track stages that have performances for each date
+    stages_by_date = {}
+    
     for date in unique_dates:
-        performances_by_date[date] = Performance.objects.filter(event=event, date=date)
+        date_performances = Performance.objects.filter(event=event, date=date)
+        performances_by_date[date] = date_performances
+        
+        # Get only stages that have performances on this date
+        active_stage_ids = date_performances.values_list('stage', flat=True).distinct()
+        stages_by_date[date] = Stage.objects.filter(id__in=active_stage_ids)
     
     context = {
         'event': event,
-        'stages': stages,
         'performances': performances,
         'unique_dates': unique_dates,
         'performances_by_date': performances_by_date,
+        'stages_by_date': stages_by_date,
+        'performers': performers,
     }
     return render(request, 'core/event_detail.html', context)
 

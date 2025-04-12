@@ -58,7 +58,7 @@
 
             {% for date in unique_dates %}
             <div class="day-content {% if forloop.first %}active{% endif %}" data-day="{{ forloop.counter }}">
-                {% for stage in stages %}
+                {% for stage in stages_by_date|get_item:date %}
                     <div class="stage">
                         <h3>{{ stage.name }}</h3>
                         <div class="performer-list">
@@ -84,17 +84,17 @@
         <div class="featured-performers">
             <h2>Featured Performers</h2>
             <div class="performers-grid">
-                {% for performance in performances %}
-                    {% if performance.performer.featured %}
+                {% for performer in performers %}
+                    {% if performer.featured %}
                     <div class="performer-card">
-                        <a href="{% url 'core:performer_detail' performance.performer.slug %}">
+                        <a href="{% url 'core:performer_detail' performer.slug %}">
                             <div class="performer-image">
-                                <img src="{{ performance.performer.image.url }}" alt="{{ performance.performer.name }}">
+                                <img src="{{ performer.image.url }}" alt="{{ performer.name }}">
                             </div>
                             <div class="performer-card-info">
-                                <h3>{{ performance.performer.name }}</h3>
-                                {% if performance.performer.genre %}
-                                <p>{{ performance.performer.genre }}</p>
+                                <h3>{{ performer.name }}</h3>
+                                {% if performer.genre %}
+                                <p>{{ performer.genre }}</p>
                                 {% endif %}
                             </div>
                         </a>
