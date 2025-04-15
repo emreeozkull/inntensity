@@ -8,7 +8,7 @@
     <div class="hero-content">
         <h1>INNTENSITY</h1>
         <p class="hero-date">{{ featured_event.date|date:"F j, Y" }}</p>
-        <a href="{% url 'core:tickets' %}" class="cta-button">Get Tickets</a>
+        <a href="{% url 'core:event_detail' featured_event.slug %}" class="cta-button">Learn More</a>
     </div>
 </section>
 
@@ -36,7 +36,7 @@
     <div class="container">
         <h2>Featured Performers</h2>
         <div class="artist-grid">
-            {% for artist in featured_artists %}
+            {% for artist in featured_performers %}
             <a href="{% url 'core:performer_detail' artist.slug %}" class="artist-card">
                 <div class="artist-image" style="background-image: url('{{ artist.image.url }}');"></div>
                 <h3>{{ artist.name }}</h3>

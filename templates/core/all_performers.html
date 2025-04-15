@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}All Performers - INNTENSITY{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>All Performers</h1>
+        <p class="subtitle">Discover all the amazing electronic music performers</p>
+    </div>
+
+    {% if performers %}
+        <div class="performers-grid">
+            {% for performer in performers %}
+                <a href="{% url 'core:performer_detail' performer.slug %}" class="performer-card">
+                    <div class="performer-image">
+                        {% if performer.image %}
+                            <img src="{{ performer.image.url }}" alt="{{ performer.name }}">
+                        {% else %}
+                            <img src="{% static 'images/default-performer.jpg' %}" alt="{{ performer.name }}">
+                        {% endif %}
+                    </div>
+                    <div class="performer-info">
+                        <h3>{{ performer.name }}</h3>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-performers">
+            <p>No performers available at the moment.</p>
+            <a href="{% url 'core:home' %}" class="btn">Return to Home</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 
