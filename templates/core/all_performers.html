@@ -11,22 +11,19 @@
     </div>
 
     {% if performers %}
-        <div class="performers-grid">
-            {% for performer in performers %}
-                <a href="{% url 'core:performer_detail' performer.slug %}" class="performer-card">
-                    <div class="performer-image">
-                        {% if performer.image %}
-                            <img src="{{ performer.image.url }}" alt="{{ performer.name }}">
-                        {% else %}
-                            <img src="{% static 'images/default-performer.jpg' %}" alt="{{ performer.name }}">
-                        {% endif %}
-                    </div>
-                    <div class="performer-info">
-                        <h3>{{ performer.name }}</h3>
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
+        <section class="featured-artists">
+            <div class="container">
+                <div class="artist-grid">
+                    {% for artist in performers %}
+                    <a href="{% url 'core:performer_detail' artist.slug %}" class="artist-card">
+                        <div class="artist-image" style="background-image: url('{{ artist.image.url }}');"></div>
+                        <h3>{{ artist.name }}</h3>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
     {% else %}
         <div class="no-performers">
             <p>No performers available at the moment.</p>
