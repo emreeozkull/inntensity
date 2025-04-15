@@ -32,6 +32,33 @@
     </div>
 </section>
 
+<div class="featured-events">
+    <div class="container">
+        <h2>Featured Events</h2>
+        <div class="events-grid">
+            {% for event in featured_events %}
+                <a href="{% url 'core:event_detail' event.slug %}" class="event-card">
+                    <div class="event-image">
+                        {% if event.hero_image %}
+                            <img src="{{ event.hero_image.url }}" alt="{{ event.title }}">
+                        {% else %}
+                            <img src="{% static 'images/default-event.jpg' %}" alt="{{ event.title }}">
+                        {% endif %}
+                    </div>
+                    <div class="event-info">
+                        <h3>{{ event.title }}</h3>
+                        <p class="event-date">{{ event.date|date:"F j, Y" }}</p>
+                        <p class="event-venue">{{ event.venue }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        <div class="view-more-container">
+            <a href="{% url 'core:lineup' %}" class="view-more">View Full Lineup</a>
+            <a href="{% url 'core:all_events' %}" class="view-more events-link">View All Events</a>        </div>
+    </div>
+</div>
+
 <section class="featured-artists">
     <div class="container">
         <h2>Featured Performers</h2>
@@ -44,8 +71,7 @@
             {% endfor %}
         </div>
         <div class="view-more-container">
-            <a href="{% url 'core:lineup' %}" class="view-more">View Full Lineup</a>
-            <a href="{% url 'core:all_events' %}" class="view-more events-link">View All Events</a>
+            <a href="{% url 'core:all_performers' %}" class="view-more events-link">View All Performers</a>
         </div>
     </div>
 </section>

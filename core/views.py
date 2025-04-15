@@ -6,11 +6,14 @@ from django.http import JsonResponse
 # Create your views here.
 
 def home(request):
-    featured_event = Event.objects.filter(featured=True).first()
+    #featured_event = Event.objects.filter(featured=True).first()
+    featured_events = Event.objects.filter().all()
+    featured_event = featured_events.filter(featured=True).first()
     featured_performers = Performer.objects.filter(featured=True)[:6]
     return render(request, 'core/home.html', {
         'featured_event': featured_event,
         'featured_performers': featured_performers,
+        'featured_events': featured_events,
     })
 
 def lineup(request):
