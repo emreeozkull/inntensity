@@ -70,7 +70,11 @@
                                             <a href="{% url 'core:performer_detail' performance.performer.slug %}" class="performer-link">
                                                 {{ performance.performer.name }}
                                             </a>
+                                            {% if performance.genre %}
+                                            <span class="performer-genre">{{ performance.genre }}</span>
+                                            {% endif %}
                                         </div>
+                                       
                                     </div>
                                 {% endif %}
                             {% endfor %}

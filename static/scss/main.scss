@@ -613,6 +613,25 @@ main {
                     width: 100%;
                 }
             }
+
+            .performer-genre {
+                display: inline-block;
+                margin-left: 10px;
+                font-size: 14px;
+                color: rgba($text-color, 0.7);
+                font-weight: 500;
+                padding: 4px 8px;
+                background-color: rgba($primary-color, 0.1);
+                border-radius: 4px;
+                border: 1px solid rgba($primary-color, 0.2);
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background-color: rgba($primary-color, 0.2);
+                    color: $primary-color;
+                    transform: translateY(-1px);
+                }
+            }
         }
     }
     

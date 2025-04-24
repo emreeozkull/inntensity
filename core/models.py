@@ -60,6 +60,7 @@ class Stage(models.Model):
 class Performance(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='performances')
     performer = models.ForeignKey(Performer, on_delete=models.CASCADE, related_name='performances')
+    genre = models.CharField(max_length=200, blank=True)
     stage = models.ForeignKey(Stage, on_delete=models.CASCADE, related_name='performances')
     start_time = models.TimeField()
     end_time = models.TimeField()
