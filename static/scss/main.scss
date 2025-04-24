@@ -1405,17 +1405,76 @@ footer {
 
             .social-links {
                 display: flex;
-                gap: 1.5rem;
+                flex-wrap: wrap;
+                gap: 1rem;
                 margin-top: 2rem;
 
                 .social-link {
-                    color: $text-color;
-                    font-size: 1.5rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    padding: 0.8rem 1.2rem;
+                    border-radius: 8px;
+                    text-decoration: none;
+                    color: white;
+                    font-weight: 600;
                     transition: all 0.3s ease;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-                    &:hover {
-                        color: $primary-color;
-                        transform: translateY(-3px);
+                    i {
+                        font-size: 1.2rem;
+                    }
+
+                    span {
+                        font-size: 0.9rem;
+                    }
+
+                    &.instagram {
+                        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+                        &:hover {
+                            transform: translateY(-3px);
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        }
+                    }
+
+                    &.facebook {
+                        background: #1877f2;
+                        &:hover {
+                            transform: translateY(-3px);
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        }
+                    }
+
+                    &.twitter {
+                        background: #1da1f2;
+                        &:hover {
+                            transform: translateY(-3px);
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        }
+                    }
+
+                    &.soundcloud {
+                        background: #ff8800;
+                        &:hover {
+                            transform: translateY(-3px);
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        }
+                    }
+
+                    &.spotify {
+                        background: #1db954;
+                        &:hover {
+                            transform: translateY(-3px);
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        }
+                    }
+
+                    &.youtube {
+                        background: #ff0000;
+                        &:hover {
+                            transform: translateY(-3px);
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        }
                     }
                 }
             }

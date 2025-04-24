@@ -20,7 +20,7 @@
             {% for event in featured_events %}
                 <a href="{% url 'core:event_detail' event.slug %}" class="event-card">
                     <div class="event-image">
-                        {% if event.hero_image %}
+                        {% if event.image %}
                             <img src="{{ event.hero_image.url }}" alt="{{ event.title }}">
                         {% else %}
                             <img src="{% static 'images/default-event.jpg' %}" alt="{{ event.title }}">

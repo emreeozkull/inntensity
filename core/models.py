@@ -6,13 +6,12 @@ class Event(models.Model):
     slug = models.SlugField(unique=True, blank=True)
     date = models.DateField()
     description = models.TextField()
-    hero_image = models.ImageField(upload_to='events/')
+    hero_image = models.ImageField(upload_to='events/', blank=True)
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     performers = models.ManyToManyField('Performer', related_name='events')
-    name = models.CharField(max_length=200) # TODO: Remove this or it is used for admin page of performers 
-    venue = models.CharField(max_length=200)
+    venue = models.CharField(max_length=200, blank=True)
     ticket_link = models.URLField(blank=True)
     image = models.ImageField(upload_to='events/', blank=True)
 
@@ -22,7 +21,7 @@ class Event(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.performers.name} - {self.name}"
+        return self.title
 
     class Meta:
         ordering = ['-date']
