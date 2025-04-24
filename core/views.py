@@ -2,12 +2,13 @@ from django.shortcuts import render, get_object_or_404
 from .models import Event, Performer, Stage, Performance, TicketType, InfoSection, FAQ
 from datetime import datetime, timedelta
 from django.http import JsonResponse
+from django.utils import timezone
 
 # Create your views here.
 
 def home(request):
     #featured_event = Event.objects.filter(featured=True).first()
-    featured_events = Event.objects.filter().all()
+    featured_events = Event.objects.filter(date__gt=timezone.now().date()).all()
     featured_event = featured_events.filter(featured=True).first()
     featured_performers = Performer.objects.filter(featured=True)[:6]
     return render(request, 'core/home.html', {
@@ -153,3 +154,15 @@ def all_performers(request):
         'performers': performers,
     }
     return render(request, 'core/all_performers.html', context)
+
+def last_events(request):
+    # Get past events, ordered by date (most recent first)
+    past_events = Event.objects.filter(date__lt=timezone.now().date()+timedelta(days=300)).order_by('-date')
+    test_events = []
+    for i in range(10):
+        test_events.append(past_events[i%len(past_events)])
+
+    context = {
+        'events': test_events,
+    }
+    return render(request, 'core/last_events.html', context)
