@@ -15,13 +15,13 @@
 
 <div class="featured-events">
     <div class="container">
-        <h2>Featured Events</h2>
+        <h2>Upcoming Events</h2>
         <div class="events-grid">
             {% for event in featured_events %}
                 <a href="{% url 'core:event_detail' event.slug %}" class="event-card">
                     <div class="event-image">
                         {% if event.image %}
-                            <img src="{{ event.hero_image.url }}" alt="{{ event.title }}">
+                            <img src="{{ event.image.url }}" alt="{{ event.title }}">
                         {% else %}
                             <img src="{% static 'images/default-event.jpg' %}" alt="{{ event.title }}">
                         {% endif %}
