@@ -109,10 +109,10 @@
                         <p class="event-date">{{ event.date|date:"F j, Y" }}</p>
                         <p class="event-venue">{{ event.venue }}</p>
                         {% if event.description %}
-                        <p class="event-description">{{ event.description|truncatewords:30 }}</p>
+                          <p class="event-description">{{ event.description|truncatewords:30 }}</p>
                         {% endif %}
                         {% if event.ticket_link %}
-                        <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener noreferrer">Get Tickets</a>
+                          <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener noreferrer">Get Tickets</a>
                         {% endif %}
                     </div>
                 </a>
