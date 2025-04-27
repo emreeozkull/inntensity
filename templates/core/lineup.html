@@ -24,7 +24,7 @@
 
             {% for date in unique_dates %}
             <div class="day-content {% if forloop.first %}active{% endif %}" data-day="{{ forloop.counter }}">
-                {% for stage in stages %}
+                {% for stage in stages_by_date|get_item:date %}
                     <div class="stage">
                         <h3>{{ stage.name }}</h3>
                         <div class="performer-list">

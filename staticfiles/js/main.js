@@ -9,45 +9,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Header scroll effect
-    const header = document.querySelector('.main-header');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-
-        if (currentScroll <= 0) {
-            header.classList.remove('scroll-up');
-            return;
-        }
-
-        if (currentScroll > lastScroll && !header.classList.contains('scroll-down')) {
-            // Scroll Down
-            header.classList.remove('scroll-up');
-            header.classList.add('scroll-down');
-        } else if (currentScroll < lastScroll && header.classList.contains('scroll-down')) {
-            // Scroll Up
-            header.classList.remove('scroll-down');
-            header.classList.add('scroll-up');
-        }
-        lastScroll = currentScroll;
-    });
-
-    // Lineup page tabs
+    // Lineup page tab switching
     const dayTabs = document.querySelectorAll('.day-tab');
+    const dayContents = document.querySelectorAll('.day-content');
+    
     if (dayTabs.length > 0) {
         dayTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove active class from all tabs and content
-                document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.day-content').forEach(c => c.classList.remove('active'));
+            tab.addEventListener('click', function() {
+                const day = this.getAttribute('data-day');
                 
-                // Add active class to clicked tab
-                tab.classList.add('active');
+                // Remove active class from all tabs and contents
+                dayTabs.forEach(t => t.classList.remove('active'));
+                dayContents.forEach(c => c.classList.remove('active'));
                 
-                // Show corresponding content
-                const day = tab.getAttribute('data-day');
-                document.getElementById(day).classList.add('active');
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                document.querySelector(`.day-content[data-day="${day}"]`).classList.add('active');
             });
         });
     }
@@ -70,4 +47,24 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    // Header scroll effect
+    let lastScrollTop = 0;
+    const header = document.querySelector('.main-header');
+    
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+            // Scrolling down
+            header.classList.add('scroll-down');
+            header.classList.remove('scroll-up');
+        } else {
+            // Scrolling up
+            header.classList.remove('scroll-down');
+            header.classList.add('scroll-up');
+        }
+        
+        lastScrollTop = scrollTop;
+    });
 }); 

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40" viewBox="0 0 120 40">
+  <style>
+    .logo-text {
+      font-family: 'Alte Haas Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      fill: #ffffff;
+    }
+    .accent {
+      fill: #ff6600;
+    }
+  </style>
+  <text x="5" y="28" class="logo-text">INN<tspan class="accent">T</tspan>ENSITY</text>
+</svg> 

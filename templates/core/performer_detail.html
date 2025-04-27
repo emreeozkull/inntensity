@@ -31,37 +31,59 @@
     <div class="container">
         <div class="performer-header">
             <div class="performer-image">
-                <img src="{{ performer.image.url }}" alt="{{ performer.name }}">
+                {% if performer.image %}
+                    <img src="{{ performer.image.url }}" alt="{{ performer.name }}">
+                {% else %}
+                    <img src="{% static 'images/default-performer.jpg' %}" alt="{{ performer.name }}">
+                {% endif %}
             </div>
             <div class="performer-info">
                 <h1>{{ performer.name }}</h1>
-                <div class="social-links">
-                    {% if performer.social_media.facebook %}
-                    <a href="{{ performer.social_media.facebook }}" target="_blank" rel="noopener" class="social-link">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    {% endif %}
-                    {% if performer.social_media.instagram %}
-                    <a href="{{ performer.social_media.instagram }}" target="_blank" rel="noopener" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    {% endif %}
-                    {% if performer.social_media.twitter %}
-                    <a href="{{ performer.social_media.twitter }}" target="_blank" rel="noopener" class="social-link">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    {% endif %}
-                    {% if performer.social_media.soundcloud %}
-                    <a href="{{ performer.social_media.soundcloud }}" target="_blank" rel="noopener" class="social-link">
-                        <i class="fab fa-soundcloud"></i>
-                    </a>
-                    {% endif %}
-                </div>
+                {% if performer.social_media %}
+                    <div class="social-links">
+                        {% if performer.social_media.instagram %}
+                            <a href="{{ performer.social_media.instagram }}" class="social-link instagram" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                        {% endif %}
+                        {% if performer.social_media.facebook %}
+                            <a href="{{ performer.social_media.facebook }}" class="social-link facebook" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-facebook"></i>
+                                <span>Facebook</span>
+                            </a>
+                        {% endif %}
+                        {% if performer.social_media.twitter %}
+                            <a href="{{ performer.social_media.twitter }}" class="social-link twitter" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </a>
+                        {% endif %}
+                        {% if performer.social_media.soundcloud %}
+                            <a href="{{ performer.social_media.soundcloud }}" class="social-link soundcloud" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-soundcloud"></i>
+                                <span>SoundCloud</span>
+                            </a>
+                        {% endif %}
+                        {% if performer.social_media.spotify %}
+                            <a href="{{ performer.social_media.spotify }}" class="social-link spotify" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-spotify"></i>
+                                <span>Spotify</span>
+                            </a>
+                        {% endif %}
+                        {% if performer.social_media.youtube %}
+                            <a href="{{ performer.social_media.youtube }}" class="social-link youtube" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-youtube"></i>
+                                <span>YouTube</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         </div>
 
         <div class="performer-bio">
-            <h2>Biography</h2>
+            <h2>About</h2>
             <div class="bio-content">
                 {{ performer.bio|linebreaks }}
             </div>
@@ -77,16 +99,20 @@
                     <div class="event-image">
                         <img src="{{ event.hero_image.url }}" alt="{{ event.title }}">
                     </div>
+                    {% else %}
+                    <div class="event-image">
+                        <img src="{% static 'images/default-event.jpg' %}" alt="{{ event.title }}">
+                    </div>
                     {% endif %}
                     <div class="event-info">
                         <h3>{{ event.title }}</h3>
                         <p class="event-date">{{ event.date|date:"F j, Y" }}</p>
                         <p class="event-venue">{{ event.venue }}</p>
                         {% if event.description %}
-                        <p class="event-description">{{ event.description|truncatewords:30 }}</p>
+                          <p class="event-description">{{ event.description|truncatewords:30 }}</p>
                         {% endif %}
                         {% if event.ticket_link %}
-                        <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener" onclick="event.stopPropagation();">Get Tickets</a>
+                          <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener noreferrer">Get Tickets</a>
                         {% endif %}
                     </div>
                 </a>

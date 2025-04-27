@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}INNTENSITY{% endblock %}</title>
     <link href="https://fonts.cdnfonts.com/css/alte-haas-grotesk" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     {% compress css %}
     <link rel="stylesheet" href="{% static 'scss/main.scss' %}" type="text/x-scss">
     {% endcompress %}
@@ -19,10 +20,12 @@
                     <img src="{% static 'images/logo-small.svg' %}" alt="INNTENSITY" class="logo-img">
                     <img src="{% static 'images/logo-small.svg' %}" alt="INNTENSITY" class="logo-img-small">
                 </a>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
                 <div class="nav-links">
-                    <a href="{% url 'core:all_events' %}">All Events</a>
-                    <a href="{% url 'core:tickets' %}">Tickets</a>
-                    <a href="{% url 'core:info' %}">Info</a>
+                    <a href="{% url 'core:all_events' %}">Upcoming Events</a>
+                    <a href="{% url 'core:last_events' %}">Past Events</a>
                 </div>
             </nav>
         </div>
@@ -37,24 +40,21 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>INNTENSITY</h3>
-                    <p>A three-day techno music festival in Innsbruck</p>
+                    <p>A Private Techno Experience in Innsbruck</p>
                 </div>
                 <div class="footer-section">
                     <h3>Contact</h3>
                     <p>Email: info@inntensity.com</p>
-                    <p>Phone: +43 664 123 456 789</p>
                 </div>
                 <div class="footer-section">
                     <h3>Follow Us</h3>
                     <div class="social-links">
-                        <a href="#">Facebook</a>
-                        <a href="#">Instagram</a>
-                        <a href="#">Twitter</a>
+                        <a href="https://www.instagram.com/inn.tensity/">Instagram</a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 INNTENSITY. All rights reserved.</p>
+                <p>&copy; 2025 INNTENSITY. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -62,5 +62,71 @@
     {% compress js %}
     <script src="{% static 'js/main.js' %}"></script>
     {% endcompress %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                
+                // Toggle hamburger animation
+                if (hamburger.classList.contains('active')) {
+                    hamburger.style.transform = 'rotate(45deg)';
+                    hamburger.style.top = '0';
+                    hamburger.style.height = '3px';
+                    hamburger.style.width = '25px';
+                    hamburger.style.marginTop = '0';
+                    hamburger.style.marginBottom = '0';
+                    hamburger.style.backgroundColor = '#ff6600';
+                    
+                    // Hide the lines
+                    hamburger.style.borderTop = 'none';
+                    hamburger.style.borderBottom = 'none';
+                } else {
+                    hamburger.style.transform = 'rotate(0deg)';
+                    hamburger.style.top = '0';
+                    hamburger.style.height = '3px';
+                    hamburger.style.width = '25px';
+                    hamburger.style.marginTop = '0';
+                    hamburger.style.marginBottom = '0';
+                    hamburger.style.backgroundColor = '#ffffff';
+                    
+                    // Show the lines
+                    hamburger.style.borderTop = 'none';
+                    hamburger.style.borderBottom = 'none';
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!navLinks.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
+            });
+            
+            // Handle scroll effects
+            let lastScrollTop = 0;
+            const header = document.querySelector('.main-header');
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop) {
+                    header.classList.add('scroll-down');
+                    header.classList.remove('scroll-up');
+                } else {
+                    header.classList.add('scroll-up');
+                    header.classList.remove('scroll-down');
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+        });
+    </script>
 </body>
 </html> 

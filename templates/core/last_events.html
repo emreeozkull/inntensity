@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Past Events - INNTENSITY{% endblock %}
+
+{% block content %}
+<div class="last-events">
+    <div class="container">
+        <div class="page-header">
+            <h1>Past Events</h1>
+            <p class="subtitle">Relive the unforgettable moments from our past events</p>
+        </div>
+
+        {% if events %}
+            <div class="events-gallery">
+                {% for event in events %}
+                    <div class="event-card">
+                        <div class="event-image">
+                            {% if event.hero_image %}
+                                <img src="{{ event.hero_image.url }}" alt="{{ event.title }}">
+                            {% else %}
+                                <img src="{% static 'images/default-event.jpg' %}" alt="{{ event.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="event-overlay">
+                            <div class="event-content">
+                                <h3>{{ event.title }}</h3>
+                                <p class="event-date">{{ event.date|date:"F j, Y" }}</p>
+                                <p class="event-venue">{{ event.venue }}</p>
+                                {% if event.description %}
+                                    <p class="event-description">{{ event.description|truncatewords:20 }}</p>
+                                {% endif %}
+                                <div class="event-actions">
+                                    <a href="{% url 'core:event_detail' event.slug %}" class="view-details">View Details</a>
+                                    {% if event.ticket_link %}
+                                        <a href="{{ event.ticket_link }}" class="ticket-button" target="_blank" rel="noopener noreferrer">Get Tickets</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-events">
+                <p>No past events available.</p>
+                <a href="{% url 'core:home' %}" class="btn">Return to Home</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 
